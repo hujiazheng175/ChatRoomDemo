@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>XiaoMing's ChatRoom</title>
+    <link href="./css/welcome.css" rel="stylesheet">
+    <script src="JS/vue.global.prod.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="./css/emoji-picker.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    <div class="welcome-container">
+        <div class="content-box">
+            <div class="logo-area">
+                <i aria-hidden="true" class="fas fa-comments" role="presentation"></i>
+            </div>
+            <div class="typing-text" ref="typingText"></div>
+            <div class="button-area">
+                <button @click="enterChat" aria-label="进入聊天室" class="enter-btn" title="进入聊天室">
+                    <i aria-hidden="true" class="fas fa-sign-in-alt" role="presentation"></i>
+                    立即进入
+                </button>
+            </div>
+            <div class="footer">
+                <p>© 2024 XiaoMing Chat. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./JS/welcome.js"></script>
+</body>
+</html> 

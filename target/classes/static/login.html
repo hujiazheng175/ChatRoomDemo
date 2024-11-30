@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>登录 - XiaoMing's ChatRoom</title>
+    <link href="./css/login.css" rel="stylesheet">
+    <script src="JS/vue.global.prod.min.js"></script>
+    <script src="JS/axios.min.js"></script>
+    <script src="JS/axios-config.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <i class="fas fa-comments"></i>
+                <h2>用户登录</h2>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input
+                            placeholder="用户名"
+                            type="text"
+                            v-model="username"
+                    >
+                </div>
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input
+                            @keyup.enter="handleLogin"
+                            placeholder="密码"
+                            type="password"
+                            v-model="password"
+                    >
+                </div>
+                <button
+                        :disabled="!username || !password || isLoading"
+                        @click="handleLogin"
+                        class="login-btn"
+                >
+                    {{ isLoading ? '登录中...' : '登录' }}
+                </button>
+                <div class="register-link">
+                    还没有账号？ <a href="register.html">立即注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./JS/login.js"></script>
+</body>
+</html> 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>聊天室 - XiaoMing's ChatRoom</title>
+    <link href="./css/chat.css" rel="stylesheet">
+    <script src="JS/vue.global.prod.min.js"></script>
+    <script src="JS/axios.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+    <div class="chat-container">
+        <!-- 左侧用户列表 -->
+        <div :class="{ 'show': showUserList }" class="users-panel">
+            <div class="panel-header">
+                <h3>在线用户 ({{ onlineUsers.length }})</h3>
+            </div>
+            <div class="users-list">
+                <div :class="{ 'current-user': user.id === currentUser.id }"
+                     :key="user.id"
+                     class="user-item"
+                     v-for="user in onlineUsers">
+                    <img :alt="user.username"
+                         :src="user.avatarUrl"
+                         :title="user.username"
+                         class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">{{ user.username }}</span>
+                        <span class="user-status">在线</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主聊天区域 -->
+        <div class="chat-main">
+            <!-- 聊天头部 -->
+            <div class="chat-header">
+                <div class="header-left">
+                    <button @click="toggleUserList" class="toggle-users" title="显示/隐藏用户列表">
+                        <i class="fas fa-users"></i>
+                    </button>
+                    <h2>聊天室</h2>
+                </div>
+                <div @click="toggleProfilePanel" class="user-profile">
+                    <img :alt="currentUser?.username"
+                         :src="currentUser?.avatarUrl"
+                         class="current-user-avatar">
+                    <span class="current-user-name">{{ currentUser?.username }}</span>
+                </div>
+            </div>
+
+            <!-- 消息列表 -->
+            <div class="messages-container" ref="messageList">
+                <div :class="{ 'my-message': msg.senderId === currentUser.id }"
+                     :key="msg.id"
+                     class="message-item"
+                     v-for="msg in messages">
+                    <img :alt="`${msg.senderName}的头像`"
+                         :src="msg.senderAvatar"
+                         :title="msg.senderName"
+                         class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-info">
+                            <span class="sender-name">{{ msg.senderName }}</span>
+                            <span class="message-time">{{ formatTime(msg.timestamp) }}</span>
+                        </div>
+                        <div class="message-text">{{ msg.content }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-area">
+                <div class="input-container">
+                    <button @click="toggleEmoji" class="emoji-btn" title="选择表情">
+                        <i class="far fa-smile"></i>
+                    </button>
+                    <input @keyup.enter="sendMessage"
+                           placeholder="输入消息..."
+                           type="text"
+                           v-model="newMessage">
+                    <button :disabled="!newMessage.trim()"
+                            @click="sendMessage"
+                            class="send-btn"
+                            title="发送消息">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 个人资料面板 -->
+        <div class="profile-panel" v-if="showProfilePanel">
+            <div class="panel-header">
+                <h3>个人资料</h3>
+                <button @click="toggleProfilePanel" class="close-btn" title="关闭">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="profile-content">
+                <img :alt="currentUser?.username"
+                     :src="currentUser?.avatarUrl"
+                     class="profile-avatar">
+                <div class="profile-info">
+                    <h4>{{ currentUser?.username }}</h4>
+                </div>
+                <button @click="handleLogout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    退出登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="JS/axios-config.js"></script>
+<script src="JS/chat.js"></script>
+</body>
+</html>
